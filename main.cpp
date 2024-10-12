@@ -1,22 +1,50 @@
 // COMSC-210 | Lab 21 | Vevaan Verma
 using namespace std;
 #include <iostream>
+#include <string>
 
 /* CONSTANTS */
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+
+class Goat {
+
+private:
+	int age;
+	string name;
+	string color;
+	string* names = new string[15]{ "Billy", "Bob", "Joe", "Tom", "Jerry", "Tim", "Sam", "Max", "Alex", "John", "Mike", "Jake", "Jack", "Nick", "Rick" };
+	string* colors = new string[15]{ "white", "black", "brown", "gray", "spotted", "tan", "cream", "beige", "red", "blue", "green", "yellow", "orange", "purple", "pink" };
+
+public:
+	Goat() {
+
+		age = rand() % 20 + 1; // random age between 1 and 20
+		name = names[rand() % 15]; // random name from names array
+		color = colors[rand() % 15]; // random color from colors array
+
+	}
+
+	Goat(int age, string name, string color) {
+
+		this->age = age; // this->age refers to the private member age
+		this->name = name; // this->name refers to the private member name
+		this->color = color; // this->color refers to the private member color
+
+	}
+};
 
 class DoublyLinkedList {
 
 private:
 	struct Node {
 
-		int data;
+		Goat data;
 		Node* prev;
 		Node* next;
 
-		Node(int val, Node* p = nullptr, Node* n = nullptr) {
+		Node(Goat goat, Node* p = nullptr, Node* n = nullptr) {
 
-			data = val;
+			data = goat;
 			prev = p;
 			next = n;
 
@@ -29,9 +57,9 @@ public:
 	// constructor
 	DoublyLinkedList() { head = nullptr; tail = nullptr; }
 
-	void push_back(int value) {
+	void push_back(Goat goat) {
 
-		Node* newNode = new Node(value);
+		Node* newNode = new Node(goat);
 
 		if (!tail) { // if there's no tail, the list is empty
 
@@ -46,9 +74,9 @@ public:
 		}
 	}
 
-	void push_front(int value) {
+	void push_front(Goat goat) {
 
-		Node* newNode = new Node(value);
+		Node* newNode = new Node(goat);
 
 		if (!head) { // if there's no head, the list is empty
 
