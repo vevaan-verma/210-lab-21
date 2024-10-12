@@ -235,10 +235,17 @@ int main() {
 	for (int i = 0; i < size; i++)
 		list.push_back(Goat());
 
+	// print list forward and backward
 	cout << "Forward:" << endl;
 	list.print();
 	cout << "Backward:" << endl;
 	list.print_reverse();
+
+	// delete list then print
+	cout << "Deleting List" << endl;
+	list.~DoublyLinkedList();
+	cout << "Forward:" << endl;
+	list.print();
 
 	return 0;
 
