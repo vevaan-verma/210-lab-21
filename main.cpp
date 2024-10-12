@@ -4,7 +4,7 @@ using namespace std;
 #include <string>
 
 /* CONSTANTS */
-const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
+const int MIN_LS = 5, MAX_LS = 20;
 
 class Goat {
 
@@ -13,7 +13,7 @@ private:
 	string name;
 	string color;
 	string* names = new string[15]{ "Billy", "Bob", "Joe", "Tom", "Jerry", "Tim", "Sam", "Max", "Alex", "John", "Mike", "Jake", "Jack", "Nick", "Rick" };
-	string* colors = new string[15]{ "white", "black", "brown", "gray", "spotted", "tan", "cream", "beige", "red", "blue", "green", "yellow", "orange", "purple", "pink" };
+	string* colors = new string[15]{ "White", "Black", "Brown", "Gray", "Spotted", "Tan", "Cream", "Beige", "Red", "Blue", "Green", "Yellow", "Orange", "Purple", "Pink" };
 
 public:
 	Goat() {
@@ -31,6 +31,12 @@ public:
 		this->color = color; // this->color refers to the private member color
 
 	}
+
+	// print() prints the goat's name, age, and color
+	// arguments: none
+	// returns: void
+	void print() { cout << "   " << name << " (" << color << ", " << age << ")" << endl; }
+
 };
 
 class DoublyLinkedList {
@@ -91,7 +97,7 @@ public:
 		}
 	}
 
-	void insert_after(int value, int position) {
+	void insert_after(Goat goat, int position) {
 
 		if (position < 0) {
 
@@ -100,7 +106,7 @@ public:
 
 		}
 
-		Node* newNode = new Node(value);
+		Node* newNode = new Node(goat);
 
 		if (!head) {
 
@@ -134,13 +140,13 @@ public:
 
 	}
 
-	void delete_node(int value) {
+	void delete_node(int position) {
 
 		if (!head) return; // empty list
 
 		Node* temp = head;
 
-		while (temp && temp->data != value)
+		for (int i = 0; i < position && temp; i++)
 			temp = temp->next;
 
 		if (!temp) return; // value not found
@@ -163,11 +169,16 @@ public:
 
 		Node* current = head;
 
-		if (!current) return;
+		if (!current) { // check if list is empty
+
+			cout << "List is empty." << endl;
+			return;
+
+		}
 
 		while (current) {
 
-			cout << current->data << " ";
+			current->data.print(); // print goat data
 			current = current->next;
 
 		}
@@ -180,11 +191,16 @@ public:
 
 		Node* current = tail;
 
-		if (!current) return;
+		if (!current) { // check if list is empty
+
+			cout << "List is empty." << endl;
+			return;
+
+		}
 
 		while (current) {
 
-			cout << current->data << " ";
+			current->data.print(); // print goat data
 			current = current->prev;
 
 		}
@@ -192,6 +208,7 @@ public:
 		cout << endl;
 
 	}
+
 	~DoublyLinkedList() {
 
 		while (head) {
@@ -209,20 +226,19 @@ public:
 // returns: int - the exit code of the program
 int main() {
 
+	srand(time(0)); // seed random number generator
+
 	DoublyLinkedList list;
-	int size = rand() % (MAX_LS - MIN_LS + 1) + MIN_LS;
+	int size = rand() % (MAX_LS - MIN_LS + 1) + MIN_LS; // random size between 5 and 20
 
-	for (int i = 0; i < size; ++i)
-		list.push_back(rand() % (MAX_NR - MIN_NR + 1) + MIN_NR);
+	// add size number of goats to the list
+	for (int i = 0; i < size; i++)
+		list.push_back(Goat());
 
-	cout << "List forward: ";
+	cout << "Forward:" << endl;
 	list.print();
-	cout << "List backward: ";
+	cout << "Backward:" << endl;
 	list.print_reverse();
-	cout << "Deleting list, then trying to print." << endl;
-	list.~DoublyLinkedList();
-	cout << "List forward: ";
-	list.print();
 
 	return 0;
 
